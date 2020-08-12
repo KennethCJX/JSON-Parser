@@ -5,21 +5,16 @@
 #include"Memalloc.h"
 
 
-typedef struct JsonType{
-  JSON_NULL;
-  JSON_OBJECT;
-  JSON_ARRAY;
-  JSON_BOOLEAN;
-  JSON_NUMBER;
-  JSON_STRING;
-  JSON_ELEMENT;
+typedef  enum {
+  JSON_NULL,
+  JSON_OBJECT,
+  JSON_ARRAY,
+  JSON_BOOLEAN,
+  JSON_NUMBER,
+  JSON_STRING,
+  JSON_ELEMENT,
 } JsonType;
 
-typedef struct JSON{
-  double double_val;
-  char   *string;
-  int    int_val;
-}
 
 typedef struct JsonGeneric JsonGeneric, JsonNull;
 struct JsonGeneric {
@@ -29,7 +24,7 @@ struct JsonGeneric {
 typedef struct JsonObject JsonObject,JsonArray;
 struct JsonObject {
   JsonType type;
-  LinkedList list;
+  DoubleLinkedList list;
 };
 
 typedef struct JsonBoolean JsonBoolean;
@@ -53,7 +48,7 @@ struct JsonString {
 typedef struct JsonElement JsonElement;
 struct JsonElement {
   JsonType type;
-  char *name;
+  char *key;
   JsonGeneric *value;
 };
 
@@ -62,8 +57,9 @@ JsonGeneric *createJsonArray();
 JsonGeneric *createJsonBoolean(int value);
 JsonGeneric *createJsonNumber(double value);
 JsonGeneric *createJsonString(char *str);
-JsonGeneric *createJsonElement(char *str, JsonGeneric *value);
-JsonObject  *JsonParse(char *strToParse);
+JsonGeneric *createJsonElement(char *str,JsonGeneric *value);
+JsonObject  *parserJsonElement(Tokenizer *tokenizer);
 
+#endif
 
 

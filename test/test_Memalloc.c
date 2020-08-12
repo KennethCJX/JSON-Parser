@@ -15,8 +15,6 @@ void tearDown(void)
 
 void test_memAlloc(void)
 {
-printf("Memory Allocation test and free memory test");
-
-
-free(ptr);
+  int ptr = (int*)malloc(sizeof(int));
+  memFree(ptr);
 }

@@ -6,4 +6,4 @@
 
 
 void *memAlloc(int data_size);
-void memFree (void *ptr);
+void  memFree (void *ptr);

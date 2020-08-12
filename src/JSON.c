@@ -5,6 +5,9 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include "Memalloc.h"
+#include "LinkedList.h"
 #include "CException.h"
 #include "Exception.h"
 
@@ -16,17 +19,124 @@ Token *getnewToken(Tokenizer *tokenizer, Token *token){
 
 /*
 JsonGeneric *createJsonArray(){
- Json* 
+  JsonArray* jsonArr;
   
 }
 */
 
+//createJsonNumber is a pointer to a funtion taking in int value and returning to JsonGeneric
+JsonGeneric* createJsonBoolean(int value){
+  JsonBoolean* jsonBool;
+  jsonBool = memAlloc(sizeof(JsonBoolean));
+  jsonBool->type = JSON_BOOLEAN;
+  jsonBool->value = value;
+  return (JsonGeneric*)jsonBool;
+}
 
-JsonGeneric *createJsonNumber(double value){
- if(item){
-   item->type = JSON_NUMBER;
-   item->double_val = value;
- 
+//createJsonNumber is pointer to function takinng in double value and returning to JsonGeneric
+JsonGeneric* createJsonNumber(double value){
+  JsonNumber* jsonNum;
+  jsonNum = memAlloc(sizeof(JsonNumber));
+  jsonNum->type  = JSON_NUMBER;
+  jsonNum->value = value; 
+  return (JsonGeneric*)jsonNum;
+}
+
+//createJsonString is a pointer to a funtion taking in str and returning to JsonGeneric
+JsonGeneric *createJsonString(char *str){
+  JsonString* jsonStr;
+  jsonStr = memAlloc(sizeof(JsonString));
+  jsonStr->type = JSON_STRING;
+  jsonStr->name = str;
+  return (JsonGeneric*)jsonStr;
+}
+
+//createJsonElement is a pointer to a funtion taking in char str and int value and returning to JsonGeneric
+JsonGeneric *createJsonElement(char *str, JsonGeneric *value){
+  JsonElement* jsonElem;
+  jsonElem = memAlloc(sizeof(JsonElement));
+  jsonElem->type = JSON_ELEMENT;
+  jsonElem->key = str;
+  jsonElem->type = JSON_ELEMENT;
+  jsonElem->value= value;
+  return (JsonGeneric*)jsonElem;
+}
+
+JsonObject  *parserJsonElement(Tokenizer *tokenizer){
+  token = getToken(tokenizer);
+  JsonElement* jsonElem;
+  jsonElem = memAlloc(sizeof(JsonElement));
+  jsonElem->type = JSON_ELEMENT;
+  jsonElem->key = tokenizer;
+  jsonElem->type = JSON_ELEMENT;
+  jsonElem->value= tokenizer;
+  return (JsonObject*)jsonElem;
+}
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "unity.h"
 #include "Memalloc.h"
 #include "LinkedList.h"
@@ -22,6 +23,51 @@ void tearDown(void)
 
 }
 
+void test_createJsonBoolean_given_1_is_true_expect_JsonBoolean_with_1(void)
+{
+  JsonBoolean *json;
+  json = (JsonBoolean*)createJsonBoolean(1);
+  TEST_ASSERT_EQUAL(JSON_BOOLEAN,json->type);
+  TEST_ASSERT_EQUAL(1,json->value);
+}
+
+void test_createJsonBoolean_given_0_is_false_expect_JsonBoolean_with_0(void)
+{
+  JsonBoolean *json;
+  json = (JsonBoolean*)createJsonBoolean(0);
+  TEST_ASSERT_EQUAL(JSON_BOOLEAN,json->type);
+  TEST_ASSERT_EQUAL(0,json->value);
+}
+
+void test_createJsonNumber_given_45678_expect_JsonNumber_with_45678(void)
+{
+  JsonNumber *json;
+  json = (JsonNumber*)createJsonNumber(45678);
+  TEST_ASSERT_EQUAL(JSON_NUMBER,json->type);
+  TEST_ASSERT_EQUAL(45678,json->value);
+}
+
+void test_createJsonString_given_the_name_Ali_expect_JsonString_with_Ali(void)
+{
+  JsonString *json;
+  json = (JsonString*)createJsonString("Ali");
+  TEST_ASSERT_EQUAL(JSON_STRING,json->type);
+  TEST_ASSERT_EQUAL_STRING("Ali",json->name);
+}
+
+
+void test_createJsonElement_given_name_Abu_and_value_21_expect_JsonElement_with_Abu_and_21(void)
+{
+  JsonElement *elem;
+  elem = (JsonElement*)createJsonElement("Abu",createJsonNumber(21.123));
+  TEST_ASSERT_EQUAL(JSON_ELEMENT,elem->type);
+  TEST_ASSERT_EQUAL_STRING("Abu",elem->key);
+  TEST_ASSERT_EQUAL(JSON_ELEMENT,elem->type);
+  JsonNumber* jsonNum = (JsonNumber*)elem->value;
+  TEST_ASSERT_EQUAL(JSON_NUMBER,jsonNum->type);
+  TEST_ASSERT_FLOAT_WITHIN(1.0e-7,21.123,jsonNum->value);
+}
+
 /*pass JSON_STRING inside JsonElement and check name
      (type)|JsonElement| 
      (key) | name      |
@@ -30,23 +76,22 @@ void tearDown(void)
 */
 void test_parse_JsonElement_given_name_with_string_John(void)
 {
-Tokenizer *tokenizer;
-Token *token;
-JsonElement *elem
-
-tokenizer = createTokenizer("\"name\":\John\" ");
-Try{
+  Tokenizer *tokenizer;
+  Token *token;
+  JsonElement *elem;
+  tokenizer = createTokenizer("\"name\":\"John\" ");
+  Try{
     elem = (JsonElement *)parserJsonElement(tokenizer);
     TEST_ASSERT_EQUAL (JSON_ELEMENT, elem->type);
-    TEST_ASSERT_EQUAL_STRING ("name", elem->name);
+    TEST_ASSERT_EQUAL_STRING ("name", elem->key);
     TEST_ASSERT_EQUAL (JSON_STRING, elem->value->type);
-    TEST_ASSERT_EQUAL_STRING ("ali",((JsonString *)elem->value)->name);
+    TEST_ASSERT_EQUAL_STRING ("John",((JsonString *)elem->value)->name);
     freeTokenizer(tokenizer);
-}catch(ex){
-  dempTokenErrorMessage(ex,1);
-  TEST_FAIL_MESSAGE("Do not expect exception to be thrown.");
- }
-}
+  }Catch(ex){
+    dumpTokenErrorMessage(ex,1);
+    TEST_FAIL_MESSAGE("Do not expect exception to be thrown.");
+  }
+}  
 
 /*pass JSON_Number inside JsonElement and check age
 elem--->  JsonElement       JSON_NUMBER
@@ -100,7 +145,6 @@ Try{
  }
 }
 
-
 /* pass age,array,boolean that are point by JsonGeneric
 json --> JsonArray --> JsonBoolean
                    --> JsonNumber
@@ -137,3 +181,13 @@ Try{
   TEST_FAIL_MESSAGE("Do not expect exception to be thrown.");
  }
 }
+
+
+  
+
+
+
+
+
+
+
