@@ -31,4 +31,5 @@
 #define ERR_EXPECTING_OPERATOR      62
 #define ERR_EXPECTING_INTEGER       63
 
+#define ERR_MALFORMED_JSON_ELEMENT  64
 #endif // Errors_H

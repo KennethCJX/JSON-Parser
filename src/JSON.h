@@ -52,13 +52,15 @@ struct JsonElement {
   JsonGeneric *value;
 };
 
+JsonGeneric *createJsonNull();
 JsonGeneric *createJsonObject();
 JsonGeneric *createJsonArray();
 JsonGeneric *createJsonBoolean(int value);
 JsonGeneric *createJsonNumber(double value);
 JsonGeneric *createJsonString(char *str);
-JsonGeneric *createJsonElement(char *str,JsonGeneric *value);
-JsonObject  *parserJsonElement(Tokenizer *tokenizer);
+JsonGeneric *createJsonElement(char *key,JsonGeneric *value);
+JsonElement *parseJsonElement(Tokenizer *tokenizer);
+JsonObject  *parseJsonObject(Tokenizer *tokenizer);
 
 #endif
 
